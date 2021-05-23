@@ -13,21 +13,36 @@
 <body>
     <div class="parallax">
     <div class="center container centermobile">
-        <form class="bg-dark text-white rounded" style="padding: 30px" id="form">
+        <form class="bg-dark text-white rounded row" style="padding: 30px" id="form">
             <h1 class="text-center">Pong Sign-Up</h1>
             <div class="form-group">
                 <label>Nickname</label>
-                <input type="text" class="form-control" id="nickname" placeholder="es. MarioRossi64">
+                <input type="text" class="form-control" value="" id="nickname" placeholder="es. MarioRossi64">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 10px;">
                 <label>Password</label>
-                <input type="password" class="form-control" id="password"
+                <input type="password" class="form-control" value="" id="password"
                     placeholder="Alessandro will keep it secret...">
             </div>
-            <button type="submit" class="btn btn-primary">Sign-up!</button>
+            <button id="btn" style="margin-top: 20px;" type="button" class="btn btn-primary" onclick="SignUp();">Sign-up!</button>
         </form>
     </div>
 </div>
+
+<script src="main.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#button').click(function() {
+            // run an AJAX get request to the route you setup above...
+            // respect the cross-domain policy by using the same domain
+            // you used to access your index.html file!
+            $.get('http://pongsignup.ddns.net/main', function(list) {
+                $('#response').html(list); // show the list
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>
