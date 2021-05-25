@@ -29,7 +29,7 @@ app.post('/signup', (req, res) => {
     if(!nickname && !password){
         return;
     }
-    else if(fs.existsSync(nickname + ".json")){
+    else if(fs.existsSync("accounts/" + nickname + ".json")){
         return;
     }
     else{
@@ -39,7 +39,7 @@ app.post('/signup', (req, res) => {
         }
     
         let json = JSON.stringify(user);
-        fs.writeFile(req.body.nickname + ".json", json, function(err){
+        fs.writeFile("accounts/" + req.body.nickname + ".json", json, function(err){
             if(err){
                 return console.error(err);
             }
