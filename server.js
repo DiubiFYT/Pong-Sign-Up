@@ -1,15 +1,33 @@
-var express = require('express'),
-    list = require('./request.js').Request; // see  template
+const express = require('express');
+const connect = require('connect');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require('path');
+const port = 3000;
 
-var app = express.createServer();
+const serveStatic = require('serve-static');
+const app = express();
 
-app.use(express.static(__dirname + '/public')); // exposes index.html, per below
+app.use( bodyParser.json() );
 
-app.get('/request', function(req, res){
-    // run your request.js script
-    // when index.html makes the ajax call to www.yoursite.com/request, this runs
-    // you can also require your request.js as a module (above) and call on that:
-    res.send(list.getList()); // try res.json() if getList() returns an object or array
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', function(req, res){
+    res.render('index', {});
 });
 
-app.listen(80);
+app.post('/signup', function(req, res){
+    console.log(req.body.username);
+    console.log(req.body.password);
+});
+
+app.engine('html', require('ejs').renderFile);
+app.set('views', __dirname);
+app.set('view engine', 'html');
+
+app.listen(port);
+
+module.exports = app;

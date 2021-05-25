@@ -1,6 +1,5 @@
- var btn = document.getElementById("btn");
-
- let nickname = document.getElementById("nickname").value;
+ var SignUp = function(){
+    let nickname = document.getElementById("nickname").value;
     let password = document.getElementById("password").value;
 
     let fs = require('fs');
@@ -19,3 +18,10 @@
     else {
         alert("This account already exists.");
     }
+};
+
+var exportss = require('exports');
+
+exportss.Request = SignUp;
+
+ 
