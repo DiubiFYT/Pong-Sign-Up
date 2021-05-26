@@ -19,9 +19,9 @@ app.get('/', function(req, res){
     res.render('index', {});
 });
 
-app.post('/signup', (req, res) => {
-    console.log("Nickname: " + req.body.nickname)
-    console.log("Password: " + req.body.password)
+app.post('/signup', function (req, res) {
+    console.log("Nickname: " + req.body.nickname);
+    console.log("Password: " + req.body.password);
 
     let nickname = req.body.nickname;
     let password = req.body.password;
@@ -46,7 +46,7 @@ app.post('/signup', (req, res) => {
         });
         return;
     }
-})
+});
 
 app.engine('html', require('ejs').renderFile);
 app.set('views', __dirname);
