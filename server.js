@@ -44,7 +44,7 @@ app.post('/signup', function (req, res) {
                 return console.error(err);
             }
         });
-        return;
+        res.redirect('signup.html');
     }
 });
 
