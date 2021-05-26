@@ -38,8 +38,7 @@ app.post('/signup', function (req, res) {
     else {
         var user = {
             nickname: nickname,
-            password: password,
-            ip: ip
+            password: password
         }
 
         var json = JSON.stringify(user);
