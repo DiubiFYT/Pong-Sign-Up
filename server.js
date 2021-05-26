@@ -7,44 +7,49 @@ const port = 3000;
 
 const app = express();
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/styles", express.static(path.join(__dirname, '/styles')));
 app.use("/js", express.static(path.join(__dirname, '/js')));
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     res.render('index', {});
+});
+
+app.get('/signup.html', function (req, res) {
+    res.render('signup.html', {});
 });
 
 app.post('/signup', function (req, res) {
     console.log("Nickname: " + req.body.nickname);
     console.log("Password: " + req.body.password);
 
-    let nickname = req.body.nickname;
-    let password = req.body.password;
+    var nickname = req.body.nickname;
+    var password = req.body.password;
 
-    if(!nickname && !password){
-        return;
+    if (fs.existsSync("accounts/" + nickname + ".json")) {
+        res.render('signuperror.html', {result: "This user already exists."}, function(err,html){
+            res.send(html);
+        });
     }
-    else if(fs.existsSync("accounts/" + nickname + ".json")){
-        return;
-    }
-    else{
-        let user = {
-            nickname: req.body.nickname,
-            password: req.body.password
+    else {
+        var user = {
+            nickname: nickname,
+            password: password
         }
-    
-        let json = JSON.stringify(user);
-        fs.writeFile("accounts/" + req.body.nickname + ".json", json, function(err){
-            if(err){
-                return console.error(err);
+
+        var json = JSON.stringify(user);
+        fs.writeFile("accounts/" + req.body.nickname + ".json", json, function (err) {
+            if (err) {
+                throw console.error(err);
             }
         });
-        res.redirect('signup.html');
+        res.render('signup.html', {result: "This user already exists."}, function(err,html){
+            res.send(html);
+        });
     }
 });
 
