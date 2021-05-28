@@ -14,6 +14,7 @@ app.use(cors());
 
 app.use("/styles", express.static(path.join(__dirname, '/styles')));
 app.use("/js", express.static(path.join(__dirname, '/js')));
+app.use("/accounts", express.static(path.join(__dirname, '/accounts')));
 
 app.get('/', function (req, res) {
     res.render('index', {});
@@ -44,9 +45,10 @@ app.post('/signup', function (req, res) {
     }
     else {
         var user = {
-            nickname: nickname,
-            password: password,
-            ip: null
+            Nickname: nickname,
+            Password: password,
+            IP: null,
+            LANIP: null
         }
 
         var json = JSON.stringify(user);
