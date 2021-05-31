@@ -3,9 +3,21 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const multer = require('multer');
+const { request } = require('https');
 const port = 3000;
 
 const app = express();
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'accounts/');
+    },
+
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
 
 app.use(bodyParser.json());
 
@@ -22,6 +34,14 @@ app.get('/', function (req, res) {
 
 app.get('/signup.html', function (req, res) {
     res.render('signup.html', {});
+});
+
+app.post('/update', function (req, res){
+    let update = multer({storage: storage}).any();
+
+    update(req, res, function(err){
+        res.sendStatus(200);
+    })
 });
 
 app.post('/signup', function (req, res) {
